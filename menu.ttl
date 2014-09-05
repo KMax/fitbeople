@@ -1,0 +1,121 @@
+@prefix rdfs: <http://www.w3.org/TR/rdf-schema/> .
+@prefix food: <http://data.lirmm.fr/ontologies/food#> .
+@prefix gr: <http://purl.org/goodrelations/v1#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://www.healthplaner.org/schema/> .
+
+:tavernaNotiAmmos a gr:BusinessEntity;
+	gr:legalName "Nonti Amos";
+	schema:address [
+		a schema:PostalAddress;
+		schema:latitude 45.75;
+		schema:longitude 49.98;
+		] .
+
+:tavernaAristidis a gr:BusinessEntity;
+	gr:legalName "Aristidis";
+	schema:address [
+		a schema:PostalAddress;
+		schema:latitude 45.75;
+		schema:longitude 49.98;
+		] .
+		
+:bakery a gr:BusinessEntity;
+	gr:legalName "Bakery/Patisserie";
+	schema:address [
+		a schema:PostalAddress;
+		schema:latitude 45.75;
+		schema:longitude 49.98;
+		] .
+		
+:shop a gr:BusinessEntity;
+	gr:legalName "Shop";
+	schema:address [
+		a schema:PostalAddress;
+		schema:latitude 45.75;
+		schema:longitude 49.98;
+		] .
+
+:greekSalad a food:Dish ;
+	rdfs:label "Greek Salad" ;
+	food:energyPer100g 150 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "3.50"^^xsd:float 
+		].
+
+:moussaka a food:Dish ;
+	rdfs:label "Moussaka" ;
+	food:energyPer100g 250 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "7.00"^^xsd:float 
+		] .
+
+:souvlaki a food:Dish ;
+	rdfs:label "souvlaki" ;
+	food:energyPer100g 370 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "7.50"^^xsd:float 
+		] .
+
+:stifado a food:Dish ;
+	rdfs:label "Stifado" ;
+	food:energyPer100g 370 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "8.30"^^xsd:float 
+		] .
+
+:saganaki a food:Dish ;
+	rdfs:label "Saganaki" ;
+	food:energyPer100g 820 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "2.50"^^xsd:float
+		].
+
+:baklava a food:Dish ;
+	rdfs:label "Baklava" ;
+	food:energyPer100g 770 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "3.50"^^xsd:float
+		] .
+
+:rakomolo a food:Dish ;
+	rdfs:label "Rakomolo" ;
+	food:energyPer100g 125 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "4.00"^^xsd:float
+		].
+
+:homemadeYogurt a food:Dish ;
+	rdfs:label "Yoghurt with honey" ;
+	food:energyPer100g 975 ;
+	:price [
+		a gr:UnitPriceSpecification;
+		gr:hasCurrency "EUR"^^xsd:string;
+		gr:hasCurrencyValue "3.70"^^xsd:float
+		].
+
+:tavernaNotiAmmos gr:offers
+			:greekSalad ,
+			:souvlaki,
+			:moussaka ,
+			:saganaki ,
+			:baklava ,
+			:stifado ,
+			:homemadeYogurt.
+
+:tavernaAristidis gr:offers :moussaka . 
