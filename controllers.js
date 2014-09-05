@@ -1,7 +1,7 @@
 (function(angular) { 'use strict';
 	var app = angular.module('fitapp.controllers', ['ngSPARQL', 'ngSPARQL.config']);
 
-	app.controller('CalendarCtrl', function($scope, sparql, SPARQL_CONFIG) {
+	app.controller('CalendarCtrl', function($scope, sparql, SPARQL_CONFIG, $window) {
 		$scope.$on('$viewContentLoaded', function() {
 			$scope.initmap();
 		});
@@ -25,7 +25,10 @@
 		$scope.totalResults = function(plantotal) {
 			var addition = plantotal || 0;
 			var day = $scope.days[$scope.today];
-			return ((day.total + plantotal)/day.kcal)*100 - 90;
+			var total = ((day.total + addition)/day.kcal)*100 - 90;
+			$window.fitTotal = day.total;
+			$window.kcal = day.kcal;
+			return total;
 		};
 		$scope.addDish = function(day, dish) {
 			if(day && dish) {
@@ -87,7 +90,7 @@
 					 	cost: "1.60",
 					},
 					{
-						name: "Foc	ccia",
+						name: "Focaccia",
 						kcal: 310,
 					 	cost: "2.00",
 					},
@@ -103,6 +106,8 @@
 					var var_location2 = new google.maps.LatLng(pois[1].lon,pois[1].lat);
 					var var_location3 = new google.maps.LatLng(pois[2].lon,pois[2].lat);
 					var var_location4 = new google.maps.LatLng(pois[3].lon,pois[3].lat);
+					
+					window.tot = 0;
 
 				var var_mapoptions = {
 				  center: var_location,
@@ -120,10 +125,18 @@
 				'</div>'+
 				'<h1 id="firstHeading" class="firstHeading">'+ pois[0].name +'</h1>'+
 				'<div id="bodyContent">'+
-				'<ul><li>'+ food[0].name + ' Euro ' + food[0].cost + ' <input type="number" name="quantity" min="1" max="5"></li>'+
-				'</ul>'+
+				'<ul><li>'+ food[0].name + ' Euro ' + food[0].cost + ' <input type="number" name="quantity" min="1" max="5" onchange="onIncrease(tot)"></li>' +
+				'</ul>' +
 				'</div>'+
 				'</div>';
+				
+				window.onIncrease = function(tot) {
+					tot+=food[0].kcal;
+					alert(tot);
+					alert(kcal);
+					alert(fitTotal);
+					document.getElementById("bar").setAttribute("style", "width:" + parseInt(((fitTotal + tot)/kcal)*100 - 90) + "%")	;
+				};
 
 				var contentString2 = '<div id="content">'+
 				'<div id="siteNotice">'+
@@ -150,7 +163,7 @@
 				'</div>'+
 				'<h1 id="firstHeading" class="firstHeading">'+ pois[3].name +'</h1>'+
 				'<div id="bodyContent">'+
-				'<ul><li>'+ food[3].name + ' Euro ' + food[3].cost + ' <input type="number" name="quantity" min="1" max="5"></li>'+
+				'<ul><li>'+ food[3].name + ' Euro ' + food[3].cost + ' <input type="number" name="quantity" min="1" max="5" ></li>'+
 				'</ul>'+
 				'</div>'+
 				'</div>';
@@ -232,6 +245,20 @@
 					infowindow3.close();
 					infowindow1.close();
 				  });
+				  
+				google.maps.event.addListener(infowindow1, 'close', function(){
+						$scope.totalResults(-tot);
+				});
+				google.maps.event.addListener(infowindow2, 'close', function(){
+						$scope.totalResults(-tot);
+				});
+				google.maps.event.addListener(infowindow3, 'close', function(){
+						$scope.totalResults(-tot);
+				});
+				google.maps.event.addListener(infowindow4, 'close', function(){
+						$scope.totalResults(-tot);
+				});
+  
 		};
 	});
 })(angular);
