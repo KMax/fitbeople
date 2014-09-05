@@ -22,9 +22,10 @@
 		];
 		$scope.dishes = [];
 		$scope.measurements = {};
-		$scope.totalResults = function() {
-			var day = $scope.days[$scope.today]	;
-			return (day.total/day.kcal)*100 - 90;
+		$scope.totalResults = function(plantotal) {
+			var addition = plantotal || 0;
+			var day = $scope.days[$scope.today];
+			return ((day.total + plantotal)/day.kcal)*100 - 90;
 		};
 		$scope.addDish = function(day, dish) {
 			if(day && dish) {
